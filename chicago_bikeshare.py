@@ -52,6 +52,16 @@ for i in range(0,20):
 input("Press Enter to continue...")
 # TASK 3
 # TODO: Create a function to add the columns(features) of a list in another list in the same order
+
+
+# def column_to_list(data, index): -> []:
+# """ Count occurencies of genders in a list.
+#       Args:
+#           data: bidimensional matrix list
+#           index: line or collum of matrix
+#       Returns:
+#          list of the line (or collum) selected
+#      
 def column_to_list(data, index):
     column_list = []
     for i in range(0, len(data)):
@@ -59,6 +69,13 @@ def column_to_list(data, index):
     # Tip: You can use a for to iterate over the samples, get the feature by index and append into a list
     return column_list
 
+# def count_gender(data_list) -> [int]:
+# """ Count occurencies of genders in a list.
+#       Args:
+#           lst: List with males and females
+#       Returns:
+#          array with popular_male and polular_female
+#      
 def count_genders(column_list):
     male = 0
     female = 0
@@ -100,6 +117,14 @@ input("Press Enter to continue...")
 # TASK 5
 # TODO: Create a function to count the genders. Return a list
 # Should return a list with [count_male, counf_female] (e.g., [10, 15] means 10 Males, 15 Females)
+
+# def count_gender(data_list) -> [int]:
+# """ Count occurencies of genders in a list.
+#       Args:
+#           lst: List with males and females
+#       Returns:
+#          array with popular_male and polular_female
+#       
 def count_gender(data_list):
     male = 0
     female = 0
@@ -125,6 +150,14 @@ input("Press Enter to continue...")
 # TASK 6
 # TODO: Create a function to get the most popular gender and print the gender as string.
 # We expect to see "Male", "Female" or "Equal" as answer.
+
+# def most_popular_gender(data_list) -> String:
+# """ Find most popular gender in a list.
+#       Args:
+#           lst: List
+#       Returns:
+#           string of the most popular
+#       """
 def most_popular_gender(data_list):
     answer = "Male"
     if count_gender(data_list)[1] > count_gender(data_list)[0]:
@@ -177,10 +210,54 @@ input("Press Enter to continue...")
 # TODO: Find the Minimum, Maximum, Mean and Median trip duration.
 # You should not use ready functions to do that, like max() or min().
 trip_duration_list = column_to_list(data_list, 2)
-min_trip = 0.
-max_trip = 0.
-mean_trip = 0.
-median_trip = 0.
+
+# def find_min_trip(data_list) -> [int]:
+# """ Find median in a list.
+#       Args:
+#           lst: List
+#       Returns:
+#           array with Minimum, Maximum, Mean and Median trip duration
+#       """
+
+def find_min_trip(data_list):
+    trip_min = 10000000000
+    trip_max = 0
+    trip_mean = 0
+    durations = list(map(int, data_list))
+    for trip in durations:
+        trip_mean += trip
+        if trip < trip_min:
+            trip_min = trip
+        elif trip > trip_max:
+            trip_max = trip
+    trip_median = find_median_trip(durations)
+    trip_mean = trip_mean / len(durations)
+    return [trip_min, trip_max, trip_mean, trip_median]
+
+
+# def find_median_trip(param1: int, param2: str) -> list:
+# """ Find median in a list.
+#       Args:
+#           lst: List
+#       Returns:
+#           the median
+#       """
+def find_median_trip(lst) -> int:
+    sortedLst = sorted(lst)
+    lstLen = len(lst)
+    index = (lstLen - 1) // 2
+    if (lstLen % 2):
+        return sortedLst[index]
+    else:
+        return sortedLst[index] + sortedLst[index + 1]/2.0
+results = find_min_trip(trip_duration_list)
+print(results)
+min_trip = results[0]
+max_trip = results[1]
+mean_trip = results[2]
+median_trip = results[3]
+
+
 
 
 print("\nTASK 9: Printing the min, max, mean and median")
@@ -197,8 +274,8 @@ input("Press Enter to continue...")
 # TASK 10
 # Gender is easy because usually only have a few options. How about start_stations? How many options does it have?
 # TODO: Check types how many start_stations do we have using set()
-user_types = set()
-
+stations = column_to_list(data_list, 2)
+user_types = list(set(stations))
 print("\nTASK 10: Printing start stations:")
 print(len(user_types))
 print(user_types)
