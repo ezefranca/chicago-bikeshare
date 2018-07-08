@@ -65,18 +65,28 @@ def column_to_list(data, index):
     # Tip: You can use a for to iterate over the samples, get the feature by index and append into a list
     return column_list
 
+def count_elements(data, x):
+    """
+    Function count element in the list
+    Args:
+        :data list for count elements
+        :x element for count ins the data
+    Returns:
+        Count elements find in the data
+    """
+    count = 0
+    for ele in data:
+        if ele == x:
+            count += 1
+    return count
+
 def count_genders(column_list):
     """ Count occurencies of genders in a list.
     :param column_list: List with males and females
     :return: array with popular_male and polular_female
     """
-    male = 0
-    female = 0
-    for gender in column_list:
-        if gender == 'Male':
-            male += 1
-        elif gender == 'Female':
-            female +=1
+    male = count_elements(column_list, "Male")
+    female = count_elements(column_list, "Female")
     return [male, female]
 
 
@@ -177,7 +187,32 @@ plt.show(block=True)
 input("Press Enter to continue...")
 # TASK 7
 # TODO: Plot a similar graph for user_types. Make sure the legend is correct.
+
+def count_user_types(data_list):
+    """
+       Get types user of list by print in legend of map
+       Args:
+           data_list: list of user types
+       Returns:
+           Array with types user
+    """
+    user_types = column_to_list(data_list, 5)
+    customer = count_elements(user_types, "Customer")
+    subscriber = count_elements(user_types, "Subscriber")
+    return [customer, subscriber]
+
+
 print("\nTASK 7: Check the chart!")
+user_types_list = column_to_list(data_list, 5)
+types = ["Customer", "Subscriber"]
+quantity = count_user_types(data_list)
+y_pos = list(range(len(types)))
+plt.bar(y_pos, quantity)
+plt.ylabel('Quantity')
+plt.xlabel('User Types')
+plt.xticks(y_pos, types)
+plt.title('Quantity by User Types')
+plt.show(block=True)
 
 
 input("Press Enter to continue...")
