@@ -42,8 +42,8 @@ input("Press Enter to continue...")
 # TODO: Print the `gender` of the first 20 rows
 
 print("\nTASK 2: Printing the genders of the first 20 samples")
-for i in range(0,20):
-    print(data_list[i][6])
+for line in data_list[:20]:
+    print(line[6])
 
 # Cool! We can get the rows(samples) 
 # iterating with a for and the columns(features) by index.
@@ -53,30 +53,23 @@ input("Press Enter to continue...")
 # TASK 3
 # TODO: Create a function to add the columns(features) of a list in another list in the same order
 
-
-# def column_to_list(data, index): -> []:
-# """ Count occurencies of genders in a list.
-#       Args:
-#           data: bidimensional matrix list
-#           index: line or collum of matrix
-#       Returns:
-#          list of the line (or collum) selected
-#      
 def column_to_list(data, index):
+    """ Coverts a collum of an bidimensional in a linear array
+    :param data: bidimensional matrix list
+    :param index: line or collum of matrix
+    :return: list of the line (or collum) selected
+    """
     column_list = []
     for i in range(0, len(data)):
         column_list.append(data[i][index])
     # Tip: You can use a for to iterate over the samples, get the feature by index and append into a list
     return column_list
 
-# def count_gender(data_list) -> [int]:
-# """ Count occurencies of genders in a list.
-#       Args:
-#           lst: List with males and females
-#       Returns:
-#          array with popular_male and polular_female
-#      
 def count_genders(column_list):
+    """ Count occurencies of genders in a list.
+    :param column_list: List with males and females
+    :return: array with popular_male and polular_female
+    """
     male = 0
     female = 0
     for gender in column_list:
@@ -118,14 +111,11 @@ input("Press Enter to continue...")
 # TODO: Create a function to count the genders. Return a list
 # Should return a list with [count_male, counf_female] (e.g., [10, 15] means 10 Males, 15 Females)
 
-# def count_gender(data_list) -> [int]:
-# """ Count occurencies of genders in a list.
-#       Args:
-#           lst: List with males and females
-#       Returns:
-#          array with popular_male and polular_female
-#       
 def count_gender(data_list):
+    """ Count occurencies of genders in a list.
+    :param data_list: List with males and females
+    :return: array with popular_male and polular_female
+    """
     male = 0
     female = 0
     for gender in column_to_list(data_list, 6):
@@ -151,17 +141,16 @@ input("Press Enter to continue...")
 # TODO: Create a function to get the most popular gender and print the gender as string.
 # We expect to see "Male", "Female" or "Equal" as answer.
 
-# def most_popular_gender(data_list) -> String:
-# """ Find most popular gender in a list.
-#       Args:
-#           lst: List
-#       Returns:
-#           string of the most popular
-#       """
 def most_popular_gender(data_list):
+    """ Find most popular gender in a list.
+    :param data_list: List of genders
+    :return: string of the most popular
+    """
     answer = "Male"
     if count_gender(data_list)[1] > count_gender(data_list)[0]:
         answer = "Female"
+    elif count_gender(data_list)[1] == count_gender(data_list)[0]:
+        answer = "Equal"
     return answer
 
 
@@ -211,15 +200,11 @@ input("Press Enter to continue...")
 # You should not use ready functions to do that, like max() or min().
 trip_duration_list = column_to_list(data_list, 2)
 
-# def find_min_trip(data_list) -> [int]:
-# """ Find median in a list.
-#       Args:
-#           lst: List
-#       Returns:
-#           array with Minimum, Maximum, Mean and Median trip duration
-#       """
-
 def find_min_trip(data_list):
+    """ Find Median, Minimum, Maximum and Mean in a list.
+    :param data_list: list with all trip values
+    :return: array with Minimum, Maximum, Mean and Median trip duration
+    """
     trip_min = 10000000000
     trip_max = 0
     trip_mean = 0
@@ -234,15 +219,14 @@ def find_min_trip(data_list):
     trip_mean = trip_mean / len(durations)
     return [trip_min, trip_max, trip_mean, trip_median]
 
-
-# def find_median_trip(param1: int, param2: str) -> list:
-# """ Find median in a list.
-#       Args:
-#           lst: List
-#       Returns:
-#           the median
-#       """
 def find_median_trip(lst) -> int:
+    """ Find median in a list.
+      Args:
+          lst: List
+      Returns:
+          the median
+    """
+
     sortedLst = sorted(lst)
     lstLen = len(lst)
     index = (lstLen - 1) // 2
@@ -250,15 +234,14 @@ def find_median_trip(lst) -> int:
         return sortedLst[index]
     else:
         return sortedLst[index] + sortedLst[index + 1]/2.0
+
 results = find_min_trip(trip_duration_list)
 print(results)
+
 min_trip = results[0]
 max_trip = results[1]
 mean_trip = results[2]
 median_trip = results[3]
-
-
-
 
 print("\nTASK 9: Printing the min, max, mean and median")
 print("Min: ", min_trip, "Max: ", max_trip, "Mean: ", mean_trip, "Median: ", median_trip)
@@ -274,11 +257,11 @@ input("Press Enter to continue...")
 # TASK 10
 # Gender is easy because usually only have a few options. How about start_stations? How many options does it have?
 # TODO: Check types how many start_stations do we have using set()
-stations = column_to_list(data_list, 2)
+stations = column_to_list(data_list, 3)
 user_types = list(set(stations))
+
 print("\nTASK 10: Printing start stations:")
 print(len(user_types))
-print(user_types)
 
 # ------------ DO NOT CHANGE ANY CODE HERE ------------
 assert len(user_types) == 582, "TASK 10: Wrong len of start stations."
@@ -301,11 +284,24 @@ input("Press Enter to continue...")
 # TODO: Create a function to count user types without hardcoding the types
 # so we can use this function with a different kind of data.
 print("Will you face it?")
-answer = "no"
+answer = "yes"
+
+def get_genders(list, genders):
+    """
+    Get genders count
+    :param list: list of all genders and a set of genders
+    :return: list with genders
+    """
+    genders_count = []
+    for gender in genders:
+        x = list.count(gender)
+        genders_count.append(x)
+    return genders_count
 
 def count_items(column_list):
-    item_types = []
-    count_items = []
+
+    item_types = set(column_list)
+    count_items = get_genders(column_list, item_types)
     return item_types, count_items
 
 if answer == "yes":
